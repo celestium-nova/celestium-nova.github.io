@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 Error!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+  <link rel="icon"
+    href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'><text y='14' font-size='13'>❌</text></svg>"
+    type="image/svg+xml">
+
+  <meta name="description"
+    content="Oops! The page you are looking for cannot be found. Explore other sections or go back home.">
+  <meta name="robots" content="noindex, nofollow">
+
+  <base href="https://bandirevanth.github.io/">
+
+  <meta property="og:title" content="404 Page Not Found">
+  <meta property="og:description" content="Looks like this page doesn't exist. Let's head back home.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://bandirevanth.github.io/assets/404.png">
+</head>
+
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    background: #fafafa;
+    color: #2d2b2b;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+    gap: 2rem;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .error {
+    flex: 1 1 350px;
+    max-width: 500px;
+    text-align: left;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+
+  .cta {
+    margin-top: 2rem;
+  }
+
+  .cta-back {
+    padding: 12px 20px;
+    font-size: 1rem;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-back::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .cta-back:hover::before {
+    transform: translateX(100%);
+  }
+
+  .cta-back:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+  }
+
+  .cta-back:active {
+    transform: scale(0.95);
+  }
+
+  .hero-img {
+    flex: 1 1 300px;
+    max-width: 450px;
+    width: 100%;
+    height: auto;
+    animation: MoveUpDown 2s ease-in-out infinite alternate-reverse both;
+  }
+
+  @keyframes MoveUpDown {
+    0% {
+      transform: translateY(10px);
+    }
+
+    100% {
+      transform: translateY(-10px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .container {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    .error {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    .hero-img {
+      max-width: 300px;
+    }
+  }
+</style>
+
+<body>
+  <section class="container">
+    <div class="error">
+      <h1>Uh Oh!</h1>
+      <p>I couldn't find the page that you're looking for :(</p>
+      <div class="cta">
+        <button class="cta-back" onclick="window.history.back();">Escape the void</button>
+      </div>
+    </div>
+    <img src="assets/404.png" alt="404 illustration" class="hero-img" />
+  </section>
+
+  <script>
+    const sets = [
+      { title: "Lost in Space!", text: "Looks like this page has drifted off into the void.", cta: "Warp back to home" },
+      { title: "Game Over", text: "You’ve hit a wall! This level doesn’t exist.", cta: "Respawn at home" },
+      { title: "Oops!", text: "This page pulled a disappearing act.", cta: "Hit the rewind button" },
+      { title: "Vanished...", text: "Somewhere between here and there, this page is lost.", cta: "Follow the breadcrumbs home" },
+      { title: "Error 404", text: "The AI tried to find this page… but even machines fail sometimes.", cta: "Back to base station" },
+      { title: "Take a Detour!", text: "Even errors can be adventures. Let’s go back.", cta: "Return from the abyss" },
+      { title: "Page Not Found", text: "This page wandered off. Don’t worry, you can go home.", cta: "Home sweet home" },
+      { title: "Where Did It Go?", text: "It seems the page is hiding. Maybe try another path.", cta: "Return to safety" },
+      { title: "Mission Failed", text: "The requested page couldn’t be located. Retry at base?", cta: "Retry mission" },
+      { title: "404 – Lost Artifact", text: "This page is missing like a rare treasure. Let's return to safety.", cta: "Escape the cosmic void" },
+      { title: "Oopsie Daisy!", text: "You found a missing page! Time to head back.", cta: "Back to base, soldier!" },
+      { title: "Page on Vacation", text: "This page took a break. Let’s navigate back.", cta: "Follow the breadcrumbs home" },
+      { title: "Lost in the Matrix", text: "The code couldn’t find the page. Follow the white rabbit home.", cta: "Return from the abyss" },
+      { title: "Wrong Turn!", text: "You veered off course. Let’s get you back on track.", cta: "Back to base station" },
+      { title: "Page in Another Dimension", text: "Somewhere in the multiverse this page exists… not here though.", cta: "Teleport back to safety" },
+      { title: "404 Adventure!", text: "Even lost pages can be fun. Time to explore back home.", cta: "Homeward bound" },
+      { title: "Digital Black Hole", text: "The page has been swallowed by cyberspace. Escape back home?", cta: "Beam me up" },
+      { title: "Oops, My Bad!", text: "Seems we misplaced this page. Head back before it’s too late.", cta: "Navigate to safety" },
+      { title: "Page Vanished", text: "It disappeared faster than pixels on a screen. Return to safety.", cta: "Return to the command deck" },
+    ];
+
+    const random = sets[Math.floor(Math.random() * sets.length)];
+    document.querySelector('.error h1').textContent = random.title;
+    document.querySelector('.error p').textContent = random.text;
+    document.querySelector('.cta-back').textContent = random.cta;
+  </script>
+</body>
+</html>
