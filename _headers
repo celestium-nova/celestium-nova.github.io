@@ -1,0 +1,19 @@
+/*
+  # Security Headers
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-Frame-Options: SAMEORIGIN
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer-when-downgrade
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  
+  # Content Security Policy
+  Content-Security-Policy: default-src 'self'; 
+    script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://www.googletagmanager.com;
+    img-src 'self' data: https://sfs-interstellar.github.io https://www.google.com https://www.gstatic.com;
+    connect-src 'self': https://formsubmit.co https://www.google-analytics.com https://www.googletagmanager.com;
+    img-src 'self' data: https://sfs-interstellar.github.io; 
+    font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; 
+    frame-src 'none'; 
+    form-action https://formsubmit.co; 
+    base-uri 'self'; 
+    object-src 'none';
