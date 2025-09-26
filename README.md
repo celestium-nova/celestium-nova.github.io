@@ -1,4 +1,4 @@
-# SFS Interstellar
-The official website of SFS Interstellar
+# Celestium Labs
+The official website of Celestium Labs. 
 
 Website coming soon. Currently under construction...
