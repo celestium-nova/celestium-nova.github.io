@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>404 — Signal Lost · Celestium Labs</title>
+<meta name="description" content="The page you're looking for has drifted out of telemetry range.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+
+/* ── TOKENS ── */
+:root {
+  --black:     #03040a;
+  --deep:      #070b14;
+  --navy:      #0b1220;
+  --cyan:      #4df0e8;
+  --cyan-dim:  #1a5c58;
+  --amber:     #f5a623;
+  --white:     #e8eaf0;
+  --muted:     #6a7390;
+  --border:    rgba(255,255,255,0.07);
+  --glow-cyan: 0 0 40px rgba(77,240,232,0.2);
+}
+
+/* ── RESET ── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { font-size:16px; height:100%; overflow:hidden; }
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'Syne', sans-serif;
+  height: 100%;
+  overflow: hidden;
+  cursor: none;
+  -webkit-font-smoothing: antialiased;
+  user-select: none;
+}
+a { color:inherit; text-decoration:none; }
+::selection { background:var(--cyan); color:var(--black); }
+::-webkit-scrollbar { width:3px; }
+::-webkit-scrollbar-thumb { background:var(--cyan-dim); }
+
+/* ── CURSOR ── */
+#cursor {
+  position:fixed; width:10px; height:10px;
+  background:var(--cyan); border-radius:50%;
+  pointer-events:none; z-index:9999;
+  transform:translate(-50%,-50%);
+  mix-blend-mode:screen;
+  transition:width 0.2s, height 0.2s;
+}
+#cursor.big { width:20px; height:20px; }
+#cursor-ring {
+  position:fixed; width:34px; height:34px;
+  border:1px solid rgba(77,240,232,0.35);
+  border-radius:50%; pointer-events:none; z-index:9998;
+  transform:translate(-50%,-50%);
+}
+
+/* ── NOISE ── */
+body::before {
+  content:''; position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+  opacity:0.45; z-index:0; pointer-events:none;
+}
+
+/* ── STARFIELD ── */
+#starfield {
+  position:fixed; inset:0;
+  z-index:0; pointer-events:none;
+}
+
+/* ── NEBULA BLOBS ── */
+.nebula {
+  position:fixed; border-radius:50%;
+  filter:blur(120px); pointer-events:none; z-index:0;
+}
+.nb1 {
+  width:600px; height:500px;
+  background:radial-gradient(ellipse,rgba(77,240,232,0.1),transparent 70%);
+  top:-150px; right:-100px; opacity:0.3;
+  animation:nbFloat 20s ease-in-out infinite alternate;
+}
+.nb2 {
+  width:500px; height:500px;
+  background:radial-gradient(ellipse,rgba(77,60,220,0.08),transparent 70%);
+  bottom:10%; left:-150px; opacity:0.25;
+  animation:nbFloat 25s ease-in-out infinite alternate-reverse;
+}
+@keyframes nbFloat {
+  0%   { transform:translate(0,0) scale(1); }
+  100% { transform:translate(24px,32px) scale(1.08); }
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  height:68px;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 48px;
+  background:rgba(3,4,10,0.85);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo-block { display:flex; flex-direction:column; gap:2px; }
+.logo-name {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:20px; letter-spacing:4px; color:var(--white); line-height:1;
+}
+.logo-tag {
+  font-family:'Space Mono',monospace;
+  font-size:8px; letter-spacing:2px; color:var(--cyan); opacity:0.6;
+}
+.nav-home {
+  font-family:'Space Mono',monospace;
+  font-size:9px; letter-spacing:2px; text-transform:uppercase;
+  color:var(--cyan); border:1px solid var(--cyan);
+  padding:8px 18px; cursor:none;
+  transition:background 0.25s, color 0.25s, box-shadow 0.25s;
+}
+.nav-home:hover {
+  background:var(--cyan); color:var(--black);
+  box-shadow:var(--glow-cyan);
+}
+
+/* ── MAIN LAYOUT ── */
+main {
+  position:relative; z-index:2;
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  padding:100px 24px 60px;
+  text-align:center;
+  overflow:hidden;
+}
+
+/* ── BIG 404 ── */
+.error-code-wrap {
+  position:relative; display:inline-block;
+  margin-bottom:8px;
+}
+.error-code {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(160px, 28vw, 320px);
+  line-height:0.85;
+  letter-spacing:8px;
+  color:transparent;
+  -webkit-text-stroke:1px rgba(77,240,232,0.15);
+  position:relative;
+  z-index:1;
+  animation:codeIn 0.9s 0.1s cubic-bezier(0.16,1,0.3,1) both;
+}
+/* glitch layers */
+.error-code::before,
+.error-code::after {
+  content:'404';
+  position:absolute; top:0; left:0; right:0;
+  font-family:'Bebas Neue',sans-serif;
+  font-size:inherit; letter-spacing:inherit; line-height:inherit;
+}
+.error-code::before {
+  color:transparent;
+  -webkit-text-stroke:1px rgba(77,240,232,0.5);
+  clip-path:polygon(0 0,100% 0,100% 38%,0 38%);
+  animation:glitchTop 4s 1.2s infinite;
+}
+.error-code::after {
+  color:transparent;
+  -webkit-text-stroke:1px rgba(255,77,109,0.45);
+  clip-path:polygon(0 62%,100% 62%,100% 100%,0 100%);
+  animation:glitchBot 4s 1.2s infinite;
+}
+@keyframes glitchTop {
+  0%,90%,100% { transform:translate(0,0); opacity:0; }
+  92%          { transform:translate(-4px,-2px); opacity:1; }
+  94%          { transform:translate(4px, 2px); opacity:1; }
+  96%          { transform:translate(-2px, 0);  opacity:1; }
+  98%          { transform:translate(0, 0);      opacity:0; }
+}
+@keyframes glitchBot {
+  0%,90%,100% { transform:translate(0,0); opacity:0; }
+  91%          { transform:translate(4px, 2px); opacity:1; }
+  93%          { transform:translate(-4px,-2px); opacity:1; }
+  95%          { transform:translate(2px, 0);   opacity:1; }
+  97%          { transform:translate(0, 0);      opacity:0; }
+}
+
+/* scan line on the 404 */
+.scan-line {
+  position:absolute; left:0; right:0; height:2px;
+  background:linear-gradient(90deg, transparent, var(--cyan), transparent);
+  opacity:0.4;
+  animation:scanMove 3s 1.5s ease-in-out infinite;
+  pointer-events:none; z-index:2;
+}
+@keyframes scanMove {
+  0%   { top:0%;   opacity:0; }
+  10%  { opacity:0.5; }
+  90%  { opacity:0.5; }
+  100% { top:100%; opacity:0; }
+}
+
+@keyframes codeIn {
+  from { opacity:0; transform:scale(1.06); }
+  to   { opacity:1; transform:scale(1); }
+}
+
+/* ── STATUS BADGE ── */
+.status-badge {
+  display:inline-flex; align-items:center; gap:8px;
+  font-family:'Space Mono',monospace;
+  font-size:9px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--amber);
+  background:rgba(245,166,35,0.08);
+  border:1px solid rgba(245,166,35,0.25);
+  padding:6px 16px;
+  margin-bottom:28px;
+  animation:fadeUp 0.6s 0.4s both;
+}
+.status-dot {
+  width:6px; height:6px; background:var(--amber); border-radius:50%;
+  animation:amberPulse 1.8s infinite;
+}
+@keyframes amberPulse {
+  0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(245,166,35,0.4); }
+  50%     { opacity:0.6; box-shadow:0 0 0 5px rgba(245,166,35,0); }
+}
+
+/* ── HEADLINE ── */
+.error-headline {
+  font-family:'Bebas Neue',sans-serif;
+  font-size:clamp(32px,5vw,64px);
+  letter-spacing:3px; color:var(--white);
+  line-height:1.0; margin-bottom:16px;
+  animation:fadeUp 0.6s 0.55s both;
+}
+.error-headline .accent {
+  color:transparent;
+  -webkit-text-stroke:1px var(--cyan);
+}
+
+/* ── SUBTEXT ── */
+.error-sub {
+  font-size:15px; line-height:1.75; color:var(--muted);
+  max-width:480px; margin:0 auto 40px;
+  animation:fadeUp 0.6s 0.7s both;
+}
+
+/* ── TELEMETRY READOUT ── */
+.telem-box {
+  display:inline-flex; flex-direction:column; gap:6px;
+  background:rgba(11,18,32,0.7);
+  border:1px solid var(--border);
+  border-left:2px solid var(--cyan);
+  padding:16px 24px;
+  margin-bottom:40px;
+  text-align:left;
+  backdrop-filter:blur(16px);
+  animation:fadeUp 0.6s 0.85s both;
+  min-width:320px;
+}
+.telem-row {
+  display:flex; align-items:center; justify-content:space-between;
+  gap:32px;
+}
+.telem-key {
+  font-family:'Space Mono',monospace;
+  font-size:8px; letter-spacing:2px; color:var(--muted); text-transform:uppercase;
+}
+.telem-val {
+  font-family:'Space Mono',monospace;
+  font-size:10px; color:var(--cyan); letter-spacing:1px;
+}
+.telem-val.red { color:#ff4d6d; }
+.telem-val.amber { color:var(--amber); }
+
+/* ── ACTIONS ── */
+.error-actions {
+  display:flex; gap:14px; flex-wrap:wrap; justify-content:center;
+  animation:fadeUp 0.6s 1s both;
+}
+.btn-primary {
+  background:var(--cyan); color:var(--black);
+  font-family:'Space Mono',monospace; font-size:10px;
+  font-weight:700; letter-spacing:2px; text-transform:uppercase;
+  padding:14px 28px; border:none; cursor:none;
+  transition:box-shadow 0.3s, transform 0.2s;
+  display:inline-flex; align-items:center; gap:10px;
+}
+.btn-primary:hover {
+  box-shadow:0 0 32px rgba(77,240,232,0.5);
+  transform:translateY(-2px);
+}
+.btn-ghost {
+  background:transparent; color:var(--white);
+  font-family:'Space Mono',monospace; font-size:10px;
+  letter-spacing:2px; text-transform:uppercase;
+  padding:14px 28px; border:1px solid rgba(255,255,255,0.15); cursor:none;
+  transition:border-color 0.25s;
+  display:inline-flex; align-items:center; gap:10px;
+}
+.btn-ghost:hover { border-color:var(--white); }
+
+/* ── QUICK LINKS ── */
+.quick-links {
+  margin-top:48px;
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+  animation:fadeUp 0.6s 1.15s both;
+}
+.ql-label {
+  font-family:'Space Mono',monospace;
+  font-size:8px; letter-spacing:3px; color:var(--muted); text-transform:uppercase;
+}
+.ql-row {
+  display:flex; gap:8px; flex-wrap:wrap; justify-content:center;
+}
+.ql-link {
+  font-family:'Space Mono',monospace;
+  font-size:9px; letter-spacing:1.5px;
+  color:var(--muted); border:1px solid var(--border);
+  padding:7px 14px; cursor:none;
+  transition:border-color 0.2s, color 0.2s;
+}
+.ql-link:hover { border-color:var(--cyan); color:var(--cyan); }
+
+/* ── FLOATING PROBE ── */
+.probe {
+  position:fixed; bottom:48px; right:56px;
+  font-size:36px; z-index:3;
+  animation:probeFloat 6s ease-in-out infinite;
+  filter:drop-shadow(0 0 12px rgba(77,240,232,0.4));
+  pointer-events:none;
+}
+@keyframes probeFloat {
+  0%,100% { transform:translateY(0) rotate(-5deg); }
+  50%     { transform:translateY(-18px) rotate(5deg); }
+}
+
+/* ── FOOTER LINE ── */
+.page-footer {
+  position:fixed; bottom:0; left:0; right:0;
+  padding:12px 48px;
+  display:flex; justify-content:space-between; align-items:center;
+  border-top:1px solid var(--border);
+  background:rgba(3,4,10,0.7);
+  backdrop-filter:blur(12px);
+  z-index:10;
+}
+.pf-left {
+  font-family:'Space Mono',monospace;
+  font-size:8px; letter-spacing:2px; color:var(--muted);
+}
+.pf-right {
+  display:flex; align-items:center; gap:6px;
+  font-family:'Space Mono',monospace;
+  font-size:8px; letter-spacing:2px; color:var(--muted);
+}
+.live-dot {
+  width:6px; height:6px; background:var(--cyan); border-radius:50%;
+  animation:cyanPulse 2s infinite;
+}
+@keyframes cyanPulse {
+  0%,100% { opacity:1; box-shadow:0 0 0 0 rgba(77,240,232,0.4); }
+  50%     { opacity:0.5; box-shadow:0 0 0 5px rgba(77,240,232,0); }
+}
+
+/* ── KEYFRAMES ── */
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(20px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width:768px) {
+  nav { padding:0 20px; height:56px; }
+  .logo-tag { display:none; }
+  main { padding:80px 20px 80px; }
+  .error-code { font-size:clamp(120px,30vw,200px); }
+  .telem-box { min-width:0; width:100%; max-width:360px; }
+  .error-actions { flex-direction:column; width:100%; max-width:320px; }
+  .btn-primary, .btn-ghost { width:100%; justify-content:center; }
+  .probe { bottom:60px; right:20px; font-size:28px; }
+  .page-footer { padding:10px 20px; }
+  .pf-left { display:none; }
+}
+@media (max-width:480px) {
+  .error-code { font-size:clamp(100px,28vw,160px); }
+  .error-headline { font-size:clamp(24px,8vw,40px); }
+  .error-sub { font-size:13px; }
+  .telem-box { padding:12px 16px; }
+  .ql-row { gap:6px; }
+  .probe { display:none; }
+}
+@media (hover:none) {
+  body { cursor:auto; }
+  #cursor, #cursor-ring { display:none; }
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NEBULA -->
+<div class="nebula nb1"></div>
+<div class="nebula nb2"></div>
+
+<!-- STARFIELD -->
+<canvas id="starfield"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="logo-block">
+    <div class="logo-name">CELESTIUM LABS</div>
+    <div class="logo-tag">PULSE: Pioneers of Universe, Launch and Science Engineering</div>
+  </div>
+  <a href="index.html" class="nav-home">← Return to Base</a>
+</nav>
+
+<!-- MAIN -->
+<main>
+
+  <div class="status-badge">
+    <span class="status-dot"></span>
+    Signal Lost · Error Code 404
+  </div>
+
+  <div class="error-code-wrap">
+    <div class="scan-line"></div>
+    <div class="error-code">404</div>
+  </div>
+
+  <h1 class="error-headline">This Page Has<br><span class="accent">Drifted Off Course</span></h1>
+
+  <p class="error-sub">The coordinate you requested is outside our telemetry range. It may have been decommissioned, relocated, or was never in our star charts to begin with.</p>
+
+  <div class="telem-box">
+    <div class="telem-row">
+      <span class="telem-key">Requested Path</span>
+      <span class="telem-val red" id="reqPath">/unknown</span>
+    </div>
+    <div class="telem-row">
+      <span class="telem-key">Mission Control</span>
+      <span class="telem-val">STANDING BY...</span>
+    </div>
+  </div>
+
+  <div class="error-actions">
+    <a href="index.html" class="btn-primary">← Return to Mission Base</a>
+    <a href="index.html#contact" class="btn-ghost">Contact Mission Desk</a>
+  </div>
+
+  <div class="quick-links">
+    <span class="ql-label">Or navigate to</span>
+    <div class="ql-row">
+      <a href="index.html#mission"       class="ql-link">Mission</a>
+      <a href="index.html#programs"      class="ql-link">Programs</a>
+      <a href="index.html#achievements"  class="ql-link">Achievements</a>
+      <a href="index.html#technology"    class="ql-link">Technology</a>
+      <a href="index.html#team"          class="ql-link">Team</a>
+      <a href="index.html#careers"       class="ql-link">Careers</a>
+      <a href="index.html#contact"       class="ql-link">Contact</a>
+    </div>
+  </div>
+
+</main>
+
+<!-- FLOATING PROBE -->
+<div class="probe">🛸</div>
+
+<!-- FOOTER -->
+<div class="page-footer">
+  <span class="pf-left">© 2026 Celestium Labs · All systems nominal except this page</span>
+  <div class="pf-right">
+    <span class="live-dot"></span>
+    Live Telemetry Active
+  </div>
+</div>
+
+<script>
+/* ── CURSOR ── */
+const cur = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx=0, my=0, rx=0, ry=0;
+document.addEventListener('mousemove', e => { mx=e.clientX; my=e.clientY; });
+document.querySelectorAll('a, button').forEach(el => {
+  el.addEventListener('mouseenter', () => cur.classList.add('big'));
+  el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+});
+(function animCur() {
+  cur.style.left=mx+'px'; cur.style.top=my+'px';
+  rx+=(mx-rx)*0.12; ry+=(my-ry)*0.12;
+  ring.style.left=rx+'px'; ring.style.top=ry+'px';
+  requestAnimationFrame(animCur);
+})();
+
+/* ── STARFIELD ── */
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let W, H, stars=[];
+function init() {
+  W = canvas.width  = window.innerWidth;
+  H = canvas.height = window.innerHeight;
+  stars = Array.from({length:280}, () => ({
+    x: Math.random()*W, y: Math.random()*H,
+    r: Math.random()*1.5+0.2,
+    a: Math.random(), da:(Math.random()-0.5)*0.006,
+    dx:(Math.random()-0.5)*0.04,
+    blue: Math.random()>0.7,
+  }));
+}
+(function draw() {
+  ctx.clearRect(0,0,W,H);
+  stars.forEach(s => {
+    s.a+=s.da; if(s.a<=0.05||s.a>=1) s.da=-s.da;
+    s.x+=s.dx; if(s.x<0) s.x=W; if(s.x>W) s.x=0;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    ctx.fillStyle=`rgba(${s.blue?'180,210,255':'210,220,240'},${s.a.toFixed(2)})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+})();
+window.addEventListener('resize', init);
+init();
+
+/* ── SHOOTING STARS ── */
+function shoot() {
+  const sx=Math.random()*W*0.8, sy=Math.random()*H*0.4;
+  const len=80+Math.random()*140;
+  const ang=Math.PI/6+(Math.random()-0.5)*0.4;
+  let t=0;
+  (function d() {
+    if(t>1) return;
+    const x1=sx+Math.cos(ang)*t*len, y1=sy+Math.sin(ang)*t*len;
+    const x2=x1+Math.cos(ang)*len*0.18, y2=y1+Math.sin(ang)*len*0.18;
+    ctx.save();
+    ctx.globalAlpha=(1-t)*0.75;
+    const g=ctx.createLinearGradient(x1,y1,x2,y2);
+    g.addColorStop(0,'rgba(200,240,255,0)');
+    g.addColorStop(1,'rgba(200,240,255,0.9)');
+    ctx.strokeStyle=g; ctx.lineWidth=1.5;
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+    ctx.stroke(); ctx.restore();
+    t+=0.035; requestAnimationFrame(d);
+  })();
+}
+setInterval(()=>{ if(Math.random()>0.3) shoot(); }, 1200);
+
+/* ── SHOW CURRENT PATH IN TELEMETRY ── */
+document.getElementById('reqPath').textContent = window.location.pathname || '/unknown';
+
+/* ── GLITCH THE 404 randomly ── */
+const code = document.querySelector('.error-code');
+setInterval(() => {
+  if(Math.random()>0.85) {
+    code.style.transform=`translateX(${(Math.random()-0.5)*6}px)`;
+    setTimeout(()=>code.style.transform='',80);
+  }
+}, 1800);
+</script>
+</body>
+</html>

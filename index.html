@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Celestium Nova R&D Labs</title>
+<meta name="description" content="Celestium Labs designs resilient systems for deep-space missions through precision science, immersive research, and collaborative innovation.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;500;600;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">CELESTIUM LABS</div>
+  <div class="loader-tag">Initializing mission systems...</div>
+  <div class="loader-tag">Born from the land of Vedic astronomy. Destined for deep space. </div>
+  <div class="loader-tag">We invented zero. Of course we'd reach infinity.</div>
+  <div class="loader-bar-wrap"><div class="loader-bar"></div></div>
+  <div class="loader-pct" id="loaderPct">0%</div>
+</div>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar"></div>
+
+<!-- CURSOR -->
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- NEBULA BLOBS -->
+<div class="nebula nebula-1"></div>
+<div class="nebula nebula-2"></div>
+<div class="nebula nebula-3"></div>
+
+<!-- STARFIELD -->
+<canvas id="starfield"></canvas>
+
+<!-- TOAST -->
+<div id="toast">
+  <span class="toast-icon">✓</span>
+  <div class="toast-text">Transmission received.<br>Mission control will reach out soon.</div>
+  <button class="toast-close" onclick="document.getElementById('toast').classList.remove('show')">✕</button>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<!-- MOBILE MENU OVERLAY -->
+<div id="menu-overlay">
+  <a class="mob-link" href="#mission"   onclick="closeMenu(this)">Mission</a>
+  <a class="mob-link" href="#programs"  onclick="closeMenu(this)">Programs</a>
+  <a class="mob-link" href="#achievements" onclick="closeMenu(this)">Achievements</a>
+  <a class="mob-link" href="#technology" onclick="closeMenu(this)">Technology</a>
+  <a class="mob-link" href="#team"      onclick="closeMenu(this)">Team</a>
+  <a class="mob-link" href="#careers"   onclick="closeMenu(this)">Careers</a>
+  <a class="mob-link" href="#contact"   onclick="closeMenu(this)">Contact</a>
+</div>
+
+<!-- NAV -->
+<nav id="main-nav">
+  <div class="logo-block">
+    <div class="logo-name">CELESTIUM LABS</div>
+    <div class="logo-tag">PULSE: Pioneers of Universe, Launch and Science Engineering</div>
+  </div>
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#mission">Mission</a></li>
+    <li><a href="#programs">Programs</a></li>
+    <li><a href="#achievements">Achievements</a></li>
+    <li><a href="#technology">Technology</a></li>
+    <li><a href="#team">Team</a></li>
+    <li><a href="#careers">Careers</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <div class="nav-right">
+    <a href="#programs" class="nav-cta">Explore Programs</a>
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- ======================================================
+     HERO
+====================================================== -->
+<section id="hero">
+  <div>
+    <p class="hero-eyebrow">Outer Space R&amp;D Collective · Est. 2025</p>
+    <h1 class="hero-title">
+      Engineering<br>Humanity's<br>Next&nbsp;<span class="word-cycle" id="wordCycle">Cosmic</span><br>Chapter.
+    </h1>
+    <p class="hero-sub">Celestium Labs designs resilient systems for deep-space missions through precision science, immersive research, and collaborative innovation.</p>
+    <div class="hero-actions">
+      <a href="#programs" class="btn-primary">Explore Programs <span>→</span></a>
+      <a href="#contact"  class="btn-ghost">Contact Mission Desk</a>
+    </div>
+  </div>
+  <div class="hero-telemetry">
+    <div class="telem-label">Now Tracking</div>
+    <div class="telem-value">X.Y&nbsp;LY</div>
+    <p class="telem-desc">Cumulative telemetry distance from active deep-space missions.</p>
+    <div class="telem-divider"></div>
+    <div class="telem-row">
+      <div class="telem-mini">
+        <span class="lbl">Active Missions</span>
+        <span class="val counter-hero" data-target="01">01</span>
+      </div>
+      <div class="telem-mini" style="text-align:center">
+        <span class="lbl">Satellites</span>
+        <span class="val counter-hero" data-target="00">00</span>
+      </div>
+      <div class="telem-mini" style="text-align:right">
+        <span class="lbl">Publications</span>
+        <span class="val counter-hero" data-target="01">01</span>
+      </div>
+    </div>
+    <div class="telem-live"><span class="live-dot"></span>Live orbital data stream</div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll to explore</span>
+    <div class="scroll-mouse"></div>
+  </div>
+</section>
+
+<!-- STATS TICKER -->
+<div class="stats-ticker">
+  <div class="ticker-gradient-l"></div>
+  <div class="ticker-gradient-r"></div>
+  <div class="ticker-track">
+    <div class="ticker-item"><span class="ticker-live-badge">Missions</span><span class="t-label">Active Missions</span><span class="t-val">01</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Papers</span><span class="t-label">Peer-Reviewed Papers</span><span class="t-val">00+</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Partners</span><span class="t-label">Partner Institutions</span><span class="t-val">01</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Satellites</span><span class="t-label">Satellites Deployed</span><span class="t-val">0+</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Nations</span><span class="t-label">Nations Represented</span><span class="t-val">01</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Distance</span><span class="t-label">Total Distance Tracked</span><span class="t-val">X.Y ly</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Years</span><span class="t-label">Years of Operation</span><span class="t-val">01</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Funding</span><span class="t-label">Funding Secured</span><span class="t-val">₹1k+</span></div>
+    <!-- Duplicate for seamless loop -->
+    <div class="ticker-item"><span class="ticker-live-badge">Missions</span><span class="t-label">Active Missions</span><span class="t-val">01</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Papers</span><span class="t-label">Peer-Reviewed Papers</span><span class="t-val">00+</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Partners</span><span class="t-label">Partner Institutions</span><span class="t-val">01</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Satellites</span><span class="t-label">Satellites Deployed</span><span class="t-val">0+</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Nations</span><span class="t-label">Nations Represented</span><span class="t-val">01</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Distance</span><span class="t-label">Total Distance Tracked</span><span class="t-val">X.Y ly</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Years</span><span class="t-label">Years of Operation</span><span class="t-val">01</span></div>
+    <div class="ticker-item"><span class="ticker-live-badge">Funding</span><span class="t-label">Funding Secured</span><span class="t-val">₹1k+</span></div>
+  </div>
+</div>
+
+<!-- ======================================================
+     MISSION
+====================================================== -->
+<section id="mission">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Mission &amp; Vision</p>
+    <div class="mission-grid">
+      <div class="reveal-left">
+        <div class="mission-manifesto">
+          We exist at the<br>
+          <span class="ghost">edge of known</span><br>
+          space.<br>We push further.
+        </div>
+        <div class="mission-body">
+          <p>Celestium Labs was born from a singular conviction: that the next era of human civilisation must extend beyond Earth. Since 2007, we've built the infrastructure, knowledge systems, and scientific frameworks that will power our expansion into the solar system.</p>
+          <p>From closed-loop habitat research to autonomous probe navigation beyond Jupiter, every program we run is designed with one mandate — mission success where no margin for error exists.</p>
+        </div>
+      </div>
+      <div class="mission-pillars reveal-right">
+        <div class="pillar">
+          <div class="pillar-title">⚡ Precision Science</div>
+          <p>Every instrument is engineered for the extreme conditions of deep space — where margins for error approach zero and every gram of data must be earned.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title">🌌 Immersive Research</div>
+          <p>Our simulated asteroid labs and orbital testbeds replicate interplanetary environments at fidelity no existing public facility can match.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title">🤝 Open Collaboration</div>
+          <p>53 institutions across 28 nations operate under the PULSE framework — our shared protocol for open, verifiable scientific discovery.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-title">🛡 Mission Resilience</div>
+          <p>Fault-tolerant systems, redundant communication stacks, and adaptive AI ensure our missions survive the unexpected — light-minutes from home.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     JOURNEY TIMELINE — REDESIGNED
+====================================================== -->
+<section id="journey">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Journey to Deep Space</p>
+
+    <div class="journey-header">
+      <div>
+        <h2 class="section-title reveal" style="margin-bottom:0">The Road<br>We've Travelled</h2>
+      </div>
+      <div class="journey-summary reveal" style="transition-delay:0.15s">
+        <p class="section-desc" style="max-width:100%"> Pushing the frontier — from a converted hangar in Hyderabad to the edge of the outer solar system.</p>
+        <div class="journey-kpi">
+          <div class="jkpi"><span class="jkpi-num">01</span><span class="jkpi-label">Years Active</span></div>
+          <div class="jkpi"><span class="jkpi-num">01</span><span class="jkpi-label">Major Milestones</span></div>
+          <div class="jkpi"><span class="jkpi-num">2031</span><span class="jkpi-label">Next Target</span></div>
+        </div>
+      </div>
+    </div>
+
+
+
+      <!-- 2025 — ... -->
+      <div class="tl-item">
+        <div class="tl-left">
+          <div class="tl-card">
+            <div class="tl-card-top">
+              <div class="tl-icon">🏗️</div>
+              <div class="tl-meta">
+                <span class="tl-year">2025</span>
+                <span class="tl-badge">Origin</span>
+              </div>
+            </div>
+            <div class="tl-title">Foundation of Celestium Labs</div>
+            <p class="tl-desc">Two friends, one converted aircraft hangar in Hyderabad, and an unshakeable conviction: private deep-space R&D could reach where governments hesitated. PULSE was born as a protocol, not yet a program.</p>
+            <div class="tl-metrics">
+              <div class="tl-metric"><span class="tl-metric-val">2</span><span class="tl-metric-lbl">Founders</span></div>
+              <div class="tl-metric"><span class="tl-metric-val">1</span><span class="tl-metric-lbl">Hangar Lab</span></div>
+              <div class="tl-metric"><span class="tl-metric-val">₹1K</span><span class="tl-metric-lbl">Seed Funding</span></div>
+            </div>
+          </div>
+        </div>
+        <div class="tl-spine">
+          <div class="tl-dot-wrap"><div class="tl-dot-ring"></div><div class="tl-dot filled"></div></div>
+          <div class="tl-connector"></div>
+        </div>
+        <div class="tl-spacer"></div>
+      </div>
+
+    </div><!-- /journey-timeline -->
+  </div>
+</section>
+
+<!-- ======================================================
+     PROGRAMS
+====================================================== -->
+<section id="programs">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Key Programs</p>
+    <h2 class="section-title reveal">Flagship<br>Initiatives in<br>Motion</h2>
+    <p class="section-desc reveal" style="margin-bottom:0">Interactive mission programs that prototype, test, and operationalize frontier research at the edge of what's possible.</p>
+    <div class="programs-grid" style="margin-top:56px">
+
+      <div class="program-card reveal">
+        <div class="card-glow"></div>
+        <div class="prog-num">Program 01</div>
+        <span class="prog-icon">🚀</span>
+        <div class="prog-name">ISS Position Prediction</div>
+        <p class="prog-desc">Python & ML project to predict position of the International Space Station.</p>
+        <div class="prog-footer">
+          <a href="https://github.com/celestium-nova/iss-position-prediction/" target="_blank" class="prog-link">Mission Brief</a>
+          <span class="prog-status active">Active</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     ACHIEVEMENTS
+====================================================== -->
+<section id="achievements">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Achievements &amp; Statistics</p>
+    <h2 class="section-title reveal">Numbers That<br>Define Us</h2>
+    <div class="stats-mega reveal">
+      <div class="stat-block">
+        <div class="stat-num"><span class="counter" data-target="01">0</span></div>
+        <div class="stat-label">Active Missions</div>
+        <div class="stat-icon">🛸</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num"><span class="counter" data-target="00">0+</span></div>
+        <div class="stat-label">Peer-Reviewed Papers</div>
+        <div class="stat-icon">📄</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num"><span class="counter" data-target="00">0</span><span class="unit">+</span></div>
+        <div class="stat-label">Satellites Deployed</div>
+        <div class="stat-icon">🛰️</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num"><span class="counter" data-target="01">0</span></div>
+        <div class="stat-label">Partner Institutions</div>
+        <div class="stat-icon">🤝</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num"><span class="counter" data-target="01">0</span></div>
+        <div class="stat-label">Years of Operation</div>
+        <div class="stat-icon">📅</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num"><span class="counter" data-target="01">0</span></div>
+        <div class="stat-label">Nations Represented (🇮🇳)</div>
+        <div class="stat-icon">🌍</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num">₹<span class="counter" data-target="1">1</span><span class="unit">K+</span></div>
+        <div class="stat-label">Funding Secured</div>
+        <div class="stat-icon">💰</div>
+      </div>
+      <div class="stat-block">
+        <div class="stat-num"><span class="counter" data-target="2031">2026</span></div>
+        <div class="stat-label">Target: Beyond the solar system</div>
+        <div class="stat-icon">🪐</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     TECHNOLOGY
+====================================================== -->
+<section id="technology">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Technology Stack</p>
+    <h2 class="section-title reveal">Built for<br>the Infinite</h2>
+    <div class="tech-layout">
+      <div class="reveal-left">
+        <p>The full-spectrum engineering systems powering our missions — from concept to orbit to the outer reaches of the solar system. Every layer is designed for the worst-case scenario we haven't imagined yet.</p>
+        <div class="tech-badge" style="margin-bottom:12px">PULSE Framework v0.1</div><br>
+        <div class="tech-badge">ISO 24113 Space Debris Compliant</div>
+      </div>
+      <div class="tech-grid reveal-right">
+        <div class="tech-cat">
+          <div class="tech-cat-head">// Propulsion &amp; Systems</div>
+          <div class="tech-tags">
+            <span class="tech-tag">Ion Drive Arrays</span>
+            <span class="tech-tag">Hall-Effect Thrusters</span>
+            <span class="tech-tag">Hybrid Chemical</span>
+            <span class="tech-tag">Solar Sail Deployment</span>
+            <span class="tech-tag">Nuclear Thermal (R&amp;D)</span>
+          </div>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat-head">// AI &amp; Autonomy</div>
+          <div class="tech-tags">
+            <span class="tech-tag">Deep RL Navigation</span>
+            <span class="tech-tag">Fault-Tolerant AI</span>
+            <span class="tech-tag">Onboard Edge Compute</span>
+            <span class="tech-tag">Swarm Coordination</span>
+            <span class="tech-tag">Predictive Telemetry</span>
+          </div>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat-head">// Communications</div>
+          <div class="tech-tags">
+            <span class="tech-tag">X-Band Deep Space</span>
+            <span class="tech-tag">Laser Optical Comms</span>
+            <span class="tech-tag">Delay-Tolerant Net</span>
+            <span class="tech-tag">Quantum Key Distrib.</span>
+            <span class="tech-tag">PULSE Mesh v4</span>
+          </div>
+        </div>
+        <div class="tech-cat">
+          <div class="tech-cat-head">// Materials &amp; Structures</div>
+          <div class="tech-tags">
+            <span class="tech-tag">Aerogel Shielding</span>
+            <span class="tech-tag">CNT Composites</span>
+            <span class="tech-tag">Self-Healing Polymers</span>
+            <span class="tech-tag">Radiation-Hard ICs</span>
+            <span class="tech-tag">4D-Printed Actuators</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     TEAM
+====================================================== -->
+<section id="team">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Team &amp; Leadership</p>
+    <h2 class="section-title reveal">The Minds<br>Behind the Mission</h2>
+    <div class="team-grid">
+
+      <div class="team-card reveal">
+        <div class="team-avatar-wrap">
+          <div class="team-avatar">🧑‍🚀</div>
+          <div class="team-overlay">
+            <div class="team-socials">
+              <a href="#" class="tsocial">LinkedIn</a>
+              <a href="#" class="tsocial">ResearchGate</a>
+            </div>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Dr. ML Abhinav</div>
+          <div class="team-role">CEO & Co-founder</div>
+          <div class="team-bio">In the Future: Masters and PhD in Aerospace Engineering.</div>
+        </div>
+      </div>
+
+      <div class="team-card reveal" style="transition-delay:0.1s">
+        <div class="team-avatar-wrap">
+          <div class="team-avatar">🧑‍💻</div>
+          <div class="team-overlay">
+            <div class="team-socials">
+              <a href="https://www.linkedin.com/in/bandi-revanth/" class="tsocial">LinkedIn</a>
+              <a href="https://github.com/bandirevanth" class="tsocial">GitHub</a>
+            </div>
+          </div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Bandi Revanth</div>
+          <div class="team-role">CTO & Co-founder</div>
+          <div class="team-bio">Expert in Tech, Software Engineering, and AI.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     CAREERS
+====================================================== -->
+<section id="careers">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Careers</p>
+    <h2 class="section-title reveal">Join the<br>Next Mission</h2>
+    <div class="careers-header reveal">
+      <p class="section-desc" style="margin: 1em;">We're building the teams that will define humanity's next century. If you're extraordinary, we want to hear from you.</p>
+      <div class="careers-count"><span>3</span>Open Positions</div>
+    </div>
+    <div class="careers-list reveal">
+      <div class="career-card">
+        <div class="career-title">Space Intern | On-site / Hybrid</div>
+        <p class="career-desc">Student currently pursuing a degree in Aerospace Engineering or related field; with a passion for Astronautics & S.T.E.M. | To apply, contact us on LinkedIn</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     NEWS
+====================================================== -->
+<section id="news">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">News &amp; Updates</p>
+    <h2 class="section-title reveal">Signal from<br>the Field</h2>
+    <div class="news-grid">
+
+      <div class="news-card reveal">
+        <div class="news-thumb" style="font-size:64px">
+          🌌
+          <span class="news-category">Mission Update</span>
+        </div>
+        <div class="news-body">
+          <div class="news-meta">Sep 21, 2025 · 1 min read</div>
+          <div class="news-title">Celestium Nova launched as a startup</div>
+          <div class="news-excerpt">To infinity and beyond...!</div>
+          <!-- <a href="#" class="news-readmore">Read Mission Report →</a> -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     PARTNERSHIPS
+====================================================== -->
+<section id="partnerships">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Future Partnerships</p>
+    <h2 class="section-title reveal">Allies Across<br>the Cosmos</h2>
+    <p class="section-desc reveal">Many institutions across 10+ nations to soon be operating under the PULSE collaboration framework.</p>
+    <div class="partners-grid reveal" style="margin-top:56px">
+      <div class="partner-tile">
+        <span class="p-icon">🇪🇺</span>
+        <div class="p-name">ESA</div>
+        <div class="p-type">European Space Agency</div>
+      </div>
+      <div class="partner-tile">
+        <span class="p-icon">🇯🇵</span>
+        <div class="p-name">JAXA</div>
+        <div class="p-type">Japan Aerospace Exploration</div>
+      </div>
+      <div class="partner-tile">
+        <span class="p-icon">🏫</span>
+        <div class="p-name">MIT CSAIL</div>
+        <div class="p-type">Autonomous Systems</div>
+      </div>
+      <div class="partner-tile">
+        <span class="p-icon">🔬</span>
+        <div class="p-name">Caltech JPL</div>
+        <div class="p-type">Propulsion Research</div>
+      </div>
+      <div class="partner-tile">
+        <span class="p-icon">🌍</span>
+        <div class="p-name">ISRO</div>
+        <div class="p-type">India Space Research Org.</div>
+      </div>
+      <div class="partner-tile">
+        <span class="p-icon">⚛️</span>
+        <div class="p-name">CERN</div>
+        <div class="p-type">Materials Science</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======================================================
+     NEWSLETTER
+
+     <section id="newsletter">
+  <div class="nl-inner">
+    <div class="reveal-left">
+      <div class="nl-label">Deep Space Signal</div>
+      <h2 class="nl-title">Stay in the<br>Mission Loop</h2>
+      <p class="nl-desc">Monthly transmissions on breakthroughs, mission updates, and the science shaping humanity's next cosmic chapter. No noise — only signal.</p>
+      <div class="nl-perks">
+        <span class="nl-perk">Exclusive mission data visualisations</span>
+        <span class="nl-perk">First access to published research</span>
+        <span class="nl-perk">Invitations to PULSE lab open days</span>
+        <span class="nl-perk">Early career opportunity alerts</span>
+      </div>
+    </div>
+    <div class="reveal-right">
+      <div class="nl-form">
+        <div class="nl-row">
+          <input type="text"  class="nl-input" placeholder="First Name">
+          <input type="text"  class="nl-input" placeholder="Last Name">
+        </div>
+        <input type="email" class="nl-input" placeholder="Work Email Address">
+        <select class="nl-select">
+          <option value="">Area of Interest</option>
+          <option>Propulsion &amp; Systems</option>
+          <option>Astrobiology</option>
+          <option>Communications</option>
+          <option>Autonomous Systems</option>
+          <option>Human Factors</option>
+          <option>General Science</option>
+        </select>
+        <button class="nl-submit" onclick="showToast()">
+          <span>📡</span> Subscribe to Signal Transmission
+        </button>
+        <p class="nl-privacy">No spam. Unsubscribe at any orbital period. Data governed by the PULSE Open Data Charter.</p>
+      </div>
+    </div>
+  </div>
+</section>
+====================================================== -->
+
+<!-- ======================================================
+     CONTACT
+====================================================== -->
+<section id="contact">
+  <div class="section-inner">
+    <p class="section-eyebrow reveal">Contact</p>
+    <h2 class="section-title reveal">Start a Mission<br>Conversation</h2>
+    <p class="section-desc reveal">Tell us about your idea, challenge, or collaboration goals. Our mission desk responds within one orbital day. | Contact us on LinkedIn</p>
+    <div class="contact-grid">
+      <div class="contact-info-list reveal-left">
+        <div class="ci-item">
+          <div class="ci-label">Headquarters</div>
+          <div class="ci-value">Hyderabad, TG, India</div>
+        </div>
+        <div class="social-row">
+          <a href="https://www.linkedin.com/in/bandi-revanth/" class="soc-btn">in Bandi Revanth</a>
+          <a href="https://github.com/celestium-nova/" class="soc-btn">gh GitHub</a>
+        </div>
+      </div>
+
+      <!-- 
+      <div class="contact-form reveal-right">
+        <div class="form-row">
+          <input type="text"  class="form-input" placeholder="Full Name">
+          <input type="email" class="form-input" placeholder="Work Email">
+        </div>
+        <input type="text" class="form-input" placeholder="Organization">
+        <select class="form-select">
+          <option value="">Inquiry Type</option>
+          <option>Research Collaboration</option>
+          <option>Investment / Funding</option>
+          <option>Media Inquiry</option>
+          <option>Career Inquiry</option>
+          <option>Partnership</option>
+          <option>General</option>
+        </select>
+        <textarea class="form-textarea" placeholder="Your mission brief — tell us what you're working toward..."></textarea>
+        <button class="form-submit" onclick="showToast()">
+          <span>✉</span> Send Transmission
+        </button>
+      </div>
+      -->
+    
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="fb-logo-name">CELESTIUM LABS</div>
+      <div class="fb-logo-tag">PULSE: Pioneers of Universe, Launch and Science Engineering</div>
+      <p class="fb-desc">Engineering humanity's next cosmic chapter through frontier science, precision engineering, and relentless curiosity about what lies beyond.</p>
+      <div class="fb-badge"><span class="live-dot"></span> Live Telemetry Active</div>
+    </div>
+    <div class="footer-col">
+      <h4>Navigate</h4>
+      <ul>
+        <li><a href="#mission">Mission &amp; Vision</a></li>
+        <li><a href="#journey">Journey Timeline</a></li>
+        <li><a href="#programs">Key Programs</a></li>
+        <li><a href="#achievements">Achievements</a></li>
+        <li><a href="#technology">Technology Stack</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Organisation</h4>
+      <ul>
+        <li><a href="#team">Leadership</a></li>
+        <li><a href="#careers">Careers</a></li>
+        <li><a href="#partnerships">Partnerships</a></li>
+        <li><a href="#news">Press Room</a></li>
+        <li><a href="#">Annual Report</a></li>
+      </ul>
+    </div>
+    <!--
+    <div class="footer-col">
+      <h4>Research</h4>
+      <ul>
+        <li><a href="#">PULSE Archive</a></li>
+        <li><a href="#">Open Data Portal</a></li>
+        <li><a href="#">Publications</a></li>
+        <li><a href="#">Patents</a></li>
+        <li><a href="#">Ethics Charter</a></li>
+      </ul>
+    </div>
+    -->
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Celestium Labs. All rights reserved. Built on Earth. Reaching for everything beyond.</p>
+    <div class="footer-coords">
+      <span class="dot"></span>
+      <span>Hyderabad, TG, India · Mission Clock: Active</span>
+    </div>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
